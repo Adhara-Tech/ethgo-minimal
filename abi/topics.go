@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"reflect"
+
+	"github.com/Adhara-Tech/ethgo-minimal"
 )
 
 // ParseLog parses an event log
