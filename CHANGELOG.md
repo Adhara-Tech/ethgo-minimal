@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 1.0.1 - 2024-06-24
+
+- Imports fixed in topics
+
 ## 1.0.0 - 2024-06-21
 
 - Initial release of ethgo-minimal
