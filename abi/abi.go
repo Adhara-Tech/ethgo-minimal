@@ -2,7 +2,8 @@ package abi
 
 import (
 	"bytes"
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"fmt"
 	"hash"
 	"io"
@@ -93,8 +94,8 @@ func MustNewABI(s string) *ABI {
 // NewABIFromReader returns an ABI object from a reader
 func NewABIFromReader(r io.Reader) (*ABI, error) {
 	var abi *ABI
-	dec := json.NewDecoder(r)
-	if err := dec.Decode(&abi); err != nil {
+	dec := jsontext.NewDecoder(r)
+	if err := json.UnmarshalDecode(dec, &abi); err != nil {
 		return nil, err
 	}
 	return abi, nil

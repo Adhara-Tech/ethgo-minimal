@@ -1,7 +1,7 @@
 package ethgo
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"math/big"
 	"testing"
 

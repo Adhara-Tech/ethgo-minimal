@@ -1,8 +1,7 @@
 package ethgo
 
 import (
-	"bytes"
-	"encoding/json"
+	"encoding/json/jsontext"
 	"io/ioutil"
 	"path/filepath"
 	"testing"
@@ -11,11 +10,11 @@ import (
 )
 
 func compactJSON(s string) string {
-	buffer := new(bytes.Buffer)
-	if err := json.Compact(buffer, []byte(s)); err != nil {
+	v := jsontext.Value([]byte(s))
+	if err := v.Compact(); err != nil {
 		panic(err)
 	}
-	return buffer.String()
+	return v.String()
 }
 
 func TestEncodingJSON_Block(t *testing.T) {

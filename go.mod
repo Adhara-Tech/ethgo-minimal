@@ -1,6 +1,6 @@
 module github.com/Adhara-Tech/ethgo-minimal
 
-go 1.21
+go 1.25.3
 
 require (
 	github.com/mitchellh/mapstructure v1.5.0
