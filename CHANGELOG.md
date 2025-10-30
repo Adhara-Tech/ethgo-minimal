@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Uses the `type` field from a transaction if informed instead of figuring it out. 
+
 ## 1.0.2 - 2024-07-12
 
 - Replaced go.mod version from 1.21.0 to 1.21 to be backwards compatible with golang 1.20 tooling
