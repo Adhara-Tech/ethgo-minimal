@@ -4,8 +4,9 @@ package abi
 
 import (
 	"bytes"
+	jsonv1 "encoding/json"
 	"encoding/json/jsontext"
-	"encoding/json/v2"
+	jsonv2 "encoding/json/v2"
 	"fmt"
 	"hash"
 	"io"
@@ -13,8 +14,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/Adhara-Tech/ethgo-minimal"
 	"golang.org/x/crypto/sha3"
+
+	"github.com/Adhara-Tech/ethgo-minimal"
 )
 
 // ABI represents the ethereum abi format
@@ -97,7 +99,7 @@ func MustNewABI(s string) *ABI {
 func NewABIFromReader(r io.Reader) (*ABI, error) {
 	var abi *ABI
 	dec := jsontext.NewDecoder(r)
-	if err := json.UnmarshalDecode(dec, &abi); err != nil {
+	if err := jsonv2.UnmarshalDecode(dec, &abi); err != nil {
 		return nil, err
 	}
 	return abi, nil
@@ -106,17 +108,17 @@ func NewABIFromReader(r io.Reader) (*ABI, error) {
 // UnmarshalJSON implements json.Unmarshaler interface
 func (a *ABI) UnmarshalJSON(data []byte) error {
 	var fields []struct {
-		Type            string         `json:"type,omitempty"`
-		Name            string         `json:"name,omitempty"`
-		Constant        bool           `json:"constant,omitempty"`
-		Anonymous       bool           `json:"anonymous,omitempty"`
-		StateMutability string         `json:"stateMutability,omitempty"`
-		Inputs          []*ArgumentStr `json:"inputs,omitempty"`
-		Outputs         []*ArgumentStr `json:"outputs,omitempty"`
-		Payable         bool           `json:"payable,omitempty"`
+		Type            string
+		Name            string
+		Constant        bool
+		Anonymous       bool
+		StateMutability string
+		Inputs          []*ArgumentStr
+		Outputs         []*ArgumentStr
+		Payable         bool
 	}
 
-	if err := json.Unmarshal(data, &fields); err != nil {
+	if err := jsonv2.Unmarshal(data, &fields, jsonv1.DefaultOptionsV1()); err != nil {
 		return err
 	}
 
@@ -408,11 +410,11 @@ func buildSignature(name string, typ *Type) string {
 
 // ArgumentStr encodes a type object
 type ArgumentStr struct {
-	Name         string         `json:"name,omitempty"`
-	Type         string         `json:"type,omitempty"`
-	Indexed      bool           `json:"indexed,omitempty"`
-	Components   []*ArgumentStr `json:"components,omitempty"`
-	InternalType string         `json:"internalType,omitempty"`
+	Name         string
+	Type         string
+	Indexed      bool
+	Components   []*ArgumentStr
+	InternalType string
 }
 
 var keccakPool = sync.Pool{

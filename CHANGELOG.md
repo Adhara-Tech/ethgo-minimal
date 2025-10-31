@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] 
 
-## 1.0.3 2025-31-10
+## 1.0.3 - 2025-31-10
 
 - Uses the `type` field from a transaction if informed instead of figuring it out. 
-- Supports `encoding/json` version 2 library if built with `goexperiment.jsonv2`
+- Supports `encoding/json` version 2 library if built with `goexperiment.jsonv2` for ABI operations.
 - Upgraded dependency `golang.org/x/crypto v0.24.0` => `v0.43.0`
 
 ## 1.0.2 - 2024-07-12
