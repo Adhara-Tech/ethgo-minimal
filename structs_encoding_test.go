@@ -1,7 +1,8 @@
 package ethgo
 
 import (
-	"encoding/json/jsontext"
+	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"path/filepath"
 	"testing"
@@ -10,11 +11,11 @@ import (
 )
 
 func compactJSON(s string) string {
-	v := jsontext.Value([]byte(s))
-	if err := v.Compact(); err != nil {
+	buffer := new(bytes.Buffer)
+	if err := json.Compact(buffer, []byte(s)); err != nil {
 		panic(err)
 	}
-	return v.String()
+	return buffer.String()
 }
 
 func TestEncodingJSON_Block(t *testing.T) {
@@ -30,11 +31,7 @@ func TestEncodingJSON_Block(t *testing.T) {
 		res2, err := txn.MarshalJSON()
 		assert.NoError(t, err)
 
-		s1 := string(content)
-		s2 := string(res2)
-
 		assert.Equal(t, content, res2)
-		assert.Equal(t, s1, s2)
 	}
 }
 
@@ -46,10 +43,6 @@ func TestEncodingJSON_Transaction(t *testing.T) {
 		// unmarshal
 		err := txn.UnmarshalJSON(content)
 		assert.NoError(t, err)
-
-		if c.name == "testsuite/transaction-eip1559-notype.json" {
-			continue
-		}
 
 		// marshal back
 		res2, err := txn.MarshalJSON()
