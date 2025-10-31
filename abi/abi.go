@@ -104,13 +104,14 @@ func NewABIFromReader(r io.Reader) (*ABI, error) {
 // UnmarshalJSON implements json.Unmarshaler interface
 func (a *ABI) UnmarshalJSON(data []byte) error {
 	var fields []struct {
-		Type            string
-		Name            string
-		Constant        bool
-		Anonymous       bool
-		StateMutability string
-		Inputs          []*ArgumentStr
-		Outputs         []*ArgumentStr
+		Type            string         `json:"type,omitempty"`
+		Name            string         `json:"name,omitempty"`
+		Constant        bool           `json:"constant,omitempty"`
+		Anonymous       bool           `json:"anonymous,omitempty"`
+		StateMutability string         `json:"stateMutability,omitempty"`
+		Inputs          []*ArgumentStr `json:"inputs,omitempty"`
+		Outputs         []*ArgumentStr `json:"outputs,omitempty"`
+		Payable         bool           `json:"payable,omitempty"`
 	}
 
 	if err := json.Unmarshal(data, &fields); err != nil {
@@ -405,11 +406,11 @@ func buildSignature(name string, typ *Type) string {
 
 // ArgumentStr encodes a type object
 type ArgumentStr struct {
-	Name         string
-	Type         string
-	Indexed      bool
-	Components   []*ArgumentStr
-	InternalType string
+	Name         string         `json:"name,omitempty"`
+	Type         string         `json:"type,omitempty"`
+	Indexed      bool           `json:"indexed,omitempty"`
+	Components   []*ArgumentStr `json:"components,omitempty"`
+	InternalType string         `json:"internalType,omitempty"`
 }
 
 var keccakPool = sync.Pool{
