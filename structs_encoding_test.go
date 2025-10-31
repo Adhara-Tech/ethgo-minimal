@@ -31,11 +31,7 @@ func TestEncodingJSON_Block(t *testing.T) {
 		res2, err := txn.MarshalJSON()
 		assert.NoError(t, err)
 
-		s1 := string(content)
-		s2 := string(res2)
-
 		assert.Equal(t, content, res2)
-		assert.Equal(t, s1, s2)
 	}
 }
 
